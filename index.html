@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>mishka — UX Researcher</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --ink: #1f1f1f;
@@ -160,6 +161,59 @@
 
 <div id="cursor-dot"></div>
 <div id="cursor-ring"></div>
+  
+/* PASSWORD GATE */
+  #pw-gate {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    transition: opacity .5s ease, visibility .5s ease;
+  }
+  #pw-gate.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+  .pw-inner {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem;
+    width: 100%; max-width: 360px; padding: 0 24px;
+  }
+  .pw-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: .5rem; }
+  .pw-logo span { color: var(--accent); }
+  .pw-label { font-family: var(--mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mid); }
+  .pw-row { display: flex; width: 100%; gap: 0; border: 1px solid var(--rule); }
+  #pw-input {
+    flex: 1; padding: 12px 16px;
+    font-family: var(--mono); font-size: .85rem; color: var(--ink);
+    background: transparent; border: none; outline: none;
+    letter-spacing: .1em;
+  }
+  #pw-input::placeholder { color: var(--faint); letter-spacing: .08em; }
+  #pw-submit {
+    padding: 12px 20px; background: var(--ink); color: white;
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+    border: none; cursor: pointer; transition: background .2s; white-space: nowrap;
+  }
+  #pw-submit:hover { background: var(--accent); }
+  #pw-error {
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .08em;
+    color: #c0392b; opacity: 0; transition: opacity .2s; height: 1em;
+  }
+  #pw-error.show { opacity: 1; }
+  .pw-hint { font-size: 13px; color: var(--faint); line-height: 1.6; }
+  </style>
+</head>
+<body>
+
+<div id="pw-gate">
+  <div class="pw-inner">
+    <div class="pw-logo">mishka<span>.</span></div>
+    <div class="pw-label">Password required</div>
+    <div class="pw-row">
+      <input id="pw-input" type="password" placeholder="enter password" autocomplete="current-password" />
+      <button id="pw-submit" onclick="checkPassword()">Enter →</button>
+    </div>
+    <div id="pw-error">Incorrect password</div>
+    <p class="pw-hint">This portfolio is password protected.<br>Request access via email if needed.</p>
+  </div>
+</div>
 
 <!-- NAV -->
 <nav class="site-nav" id="nav">
@@ -407,6 +461,43 @@
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => { const target = document.querySelector(a.getAttribute('href')); if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); } });
   });
+
+// PASSWORD GATE
+  (function() {
+    const CORRECT = 'mishka2024'; // ← change this
+    const SESSION_KEY = 'portfolio_auth';
+    const gate = document.getElementById('pw-gate');
+    // Already authenticated this session?
+    if (sessionStorage.getItem(SESSION_KEY) === 'true') {
+      gate.classList.add('hidden');
+      return;
+    }
+    // Prevent body scroll while gate is visible
+    document.body.style.overflow = 'hidden';
+  })();
+
+  function checkPassword() {
+    const CORRECT = 'mishka2024'; // ← change this
+    const input = document.getElementById('pw-input');
+    const error = document.getElementById('pw-error');
+    const gate = document.getElementById('pw-gate');
+    if (input.value === CORRECT) {
+      sessionStorage.setItem('portfolio_auth', 'true');
+      gate.classList.add('hidden');
+      document.body.style.overflow = '';
+      error.classList.remove('show');
+    } else {
+      error.classList.add('show');
+      input.value = '';
+      input.focus();
+      setTimeout(() => error.classList.remove('show'), 2500);
+    }
+  }
+
+  document.getElementById('pw-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') checkPassword();
+  });
+  
 </script>
 </body>
 </html>
