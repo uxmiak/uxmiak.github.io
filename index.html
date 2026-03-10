@@ -137,7 +137,7 @@
     .footer-links a:hover { color: var(--accent); }
 
     /* REVEAL */
-    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal { opacity: 1; transform: none; transition: opacity .7s ease, transform .7s ease; }
     .reveal.visible { opacity: 1; transform: none; }
 
     @media (max-width: 900px) {
@@ -155,14 +155,8 @@
       .nav-cta { display: none; }
       .process-grid { grid-template-columns: 1fr; }
     }
-  </style>
-</head>
-<body>
 
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
-  
-/* PASSWORD GATE */
+  /* PASSWORD GATE */
   #pw-gate {
     position: fixed; inset: 0; z-index: 9999;
     background: var(--bg);
@@ -214,6 +208,7 @@
     <p class="pw-hint">This portfolio is password protected.<br>Request access via email if needed.</p>
   </div>
 </div>
+
 
 <!-- NAV -->
 <nav class="site-nav" id="nav">
