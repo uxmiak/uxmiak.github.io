@@ -4,33 +4,30 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>mishka — UX Researcher</title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
+  
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap');
     :root {
-      --ink: #1f1f1f;
-      --mid: #444444;
-      --faint: #6e6e6e;
-      --rule: rgba(0,0,0,0.12);
+      --ink: #242424;
+      --mid: #5a5a5a;
+      --faint: #767676;
+      --rule: rgba(0,0,0,0.08);
       --bg: #ffffff;
+      --surface: rgba(121,169,209,0.06);
+      --surface-2: #edecea;
       --white: #ffffff;
-      --surface: rgba(79,134,182,0.08);
-      --surface-2: #f3f2f0;
-      --accent: #4f86b6;
-      --accent-2: #4c8c7c;
-      --accent-warm: #b86a3d;
+      --accent: #79A9D1;
+      --accent-2: #6aaa9a;
+      --accent-warm: #c07a50;
       --serif: 'Outfit', sans-serif;
       --mono: 'JetBrains Mono', monospace;
       --sans: 'Inter', sans-serif;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 16px; scroll-behavior: smooth; cursor: none; }
+    html { font-size: 16px; scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-weight: 300; -webkit-font-smoothing: antialiased; overflow-x: hidden; line-height: 1.6; }
 
-    /* CURSOR */
-    #cursor-dot { width: 20px; height: 20px; background: var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, opacity 0.3s; opacity: 0.5; }
-    #cursor-ring { width: 32px; height: 32px; border: 0px solid var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, opacity 0.3s; opacity: 0.5; }
-    #cursor-ring.expand { width: 52px; height: 52px; opacity: 0.9; }
+    /* cursor: default browser */
 
     /* NAV */
     .site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 20px 40px; transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s; border-bottom: 1px solid transparent; }
@@ -56,13 +53,13 @@
     .hero-bottom { display: flex; gap: 60px; align-items: flex-end; position: relative; }
     .hero-desc { font-size: 15px; color: var(--mid); max-width: 320px; line-height: 1.75; }
     .hero-actions { display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; }
-    .hero-action-item { display: inline-flex; align-items: center; gap: .6rem; font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color .2s; cursor: none; background: none; border: none; padding: 0; font-weight: 400; }
+    .hero-action-item { display: inline-flex; align-items: center; gap: .6rem; font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color .2s; background: none; border: none; padding: 0; font-weight: 400; }
     .hero-action-item:hover { color: var(--ink); }
     .hero-action-icon { width: 32px; height: 32px; border: 1px solid var(--rule); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .8rem; flex-shrink: 0; transition: border-color .2s, background .2s; }
     .hero-action-item:hover .hero-action-icon { border-color: var(--accent); background: rgba(121,169,209,0.06); }
     .hero-stats { display: flex; gap: 40px; margin-left: auto; }
     .stat-num { font-family: var(--serif); font-size: 34px; font-weight: 700; color: var(--ink); display: block; line-height: 1; margin-bottom: 6px; }
-    .stat-label { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+    .stat-label { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
     .scroll-indicator { position: absolute; bottom: 40px; right: 40px; font-family: var(--mono); font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--faint); writing-mode: vertical-rl; transform: rotate(180deg); display: flex; align-items: center; gap: 12px; }
     .scroll-indicator::before { content: ''; display: block; width: 1px; height: 40px; background: var(--rule); }
     .copy-feedback { font-family: var(--mono); font-size: .68rem; color: var(--accent); opacity: 0; transition: opacity .3s; align-self: center; }
@@ -91,9 +88,9 @@
     .cs-card:last-child { border-bottom: 1px solid var(--rule); }
     .cs-card-inner { max-width: 920px; margin: 0 auto; padding: 3rem 40px; }
     .cs-meta { display: flex; align-items: center; gap: .5rem; margin-bottom: .9rem; flex-wrap: wrap; }
-    .cs-org { font-family: var(--mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 400; color: var(--faint); }
+    .cs-org { font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 400; color: var(--faint); }
     .cs-org-sep { color: var(--rule); font-size: .8rem; }
-    .cs-category { font-family: var(--mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 400; }
+    .cs-category { font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 400; }
     .cs-card--b2b .cs-category { color: #3a8a5a; }
     .cs-card--docs .cs-category { color: #2563c0; }
     .cs-card--copilot .cs-category { color: #6d28d9; }
@@ -101,7 +98,7 @@
     .cs-title { font-family: var(--serif); font-size: clamp(1.35rem, 2.2vw, 1.75rem); font-weight: 700; line-height: 1.25; letter-spacing: -.02em; margin-bottom: .8rem; max-width: 680px; }
     .cs-desc { font-size: .9rem; line-height: 1.75; color: var(--mid); margin-bottom: 1.25rem; max-width: 620px; }
     .cs-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.5rem; }
-    .cs-chip { font-family: var(--mono); font-size: .62rem; letter-spacing: .06em; text-transform: uppercase; border: 1px solid var(--rule); padding: .2rem .7rem; color: var(--mid); border-radius: 2px; background: var(--bg); }
+    .cs-chip { font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; border: 1px solid var(--rule); padding: .2rem .7rem; color: var(--mid); border-radius: 2px; background: var(--bg); }
     .cs-link { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 400; color: var(--ink); text-decoration: none; border-bottom: 1.5px solid var(--ink); padding-bottom: 2px; transition: color .2s, border-color .2s; }
     .cs-link:hover { color: var(--accent); border-color: var(--accent); }
     .cs-link-arrow { font-size: .85rem; transition: transform .2s; }
@@ -210,6 +207,7 @@
 </div>
 
 
+
 <!-- NAV -->
 <nav class="site-nav" id="nav">
   <a class="logo" href="#">mishka<span>.</span></a>
@@ -218,7 +216,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#process">Process</a></li>
   </ul>
-  <a class="nav-cta" href="mailto:ux.miak@gmail.com">Get in touch</a>
+  <a class="nav-cta" href="/cdn-cgi/l/email-protection#45303d6b282c242e052228242c296b262a28">Get in touch</a>
 </nav>
 
 <!-- HERO -->
@@ -234,7 +232,7 @@
       <div class="hero-actions" style="margin-top:2rem;">
         <button class="hero-action-item" onclick="copyEmail()">
           <span class="hero-action-icon">✉</span>
-          <span>ux.miak@gmail.com</span>
+          <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a0d5d88ecdc9c1cbe0c7cdc1c9cc8ec3cfcd">[email&#160;protected]</a></span>
         </button>
         <span class="copy-feedback" id="copyFeedback">Copied!</span>
         <a href="#" class="hero-action-item" download>
@@ -423,41 +421,55 @@
 
 <!-- FOOTER -->
 <footer class="site-footer">
-  <div class="footer-domain">ux.miak@gmail.com</div>
+  <div class="footer-domain"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5a2f227437333b311a3d373b333674393537">[email&#160;protected]</a></div>
   <div class="footer-links">
     <a href="#work">Work</a>
     <a href="#about">About</a>
     <a href="#process">Process</a>
-    <a href="mailto:ux.miak@gmail.com">Contact</a>
+    <a href="/cdn-cgi/l/email-protection#b4c1cc9ad9ddd5dff4d3d9d5ddd89ad7dbd9">Contact</a>
   </div>
 </footer>
 
-<script>
-  const dot = document.getElementById('cursor-dot');
-  const ring = document.getElementById('cursor-ring');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx + 'px'; dot.style.top = my + 'px'; });
-  function lerp(a, b, t) { return a + (b - a) * t; }
-  (function animRing() { rx = lerp(rx, mx, 0.12); ry = lerp(ry, my, 0.12); ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(animRing); })();
-  document.querySelectorAll('a, button, .cs-card').forEach(el => {
-    el.addEventListener('mouseenter', () => ring.classList.add('expand'));
-    el.addEventListener('mouseleave', () => ring.classList.remove('expand'));
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('nav');
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 40);
+    const h = document.documentElement;
+    const bar = document.getElementById('bar');
+    if (bar) bar.style.width = (window.scrollY / (h.scrollHeight - h.clientHeight) * 100) + '%';
   });
-  window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40); });
   function copyEmail() {
     navigator.clipboard.writeText('ux.miak@gmail.com').then(() => {
       const fb = document.getElementById('copyFeedback');
-      fb.classList.add('show');
-      setTimeout(() => fb.classList.remove('show'), 2000);
+      if (fb) { fb.classList.add('show'); setTimeout(() => fb.classList.remove('show'), 2000); }
     });
   }
-  const io = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } }); }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => { const target = document.querySelector(a.getAttribute('href')); if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); } });
-  });
+  // Cursor (case studies only)
+  const cd = document.getElementById('cd');
+  const cr = document.getElementById('cr');
+  const aura = document.getElementById('aura');
+  if (cd && cr) {
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove', e => {
+      mx=e.clientX; my=e.clientY;
+      cd.style.left=mx+'px'; cd.style.top=my+'px';
+      if (aura) { aura.style.left=mx+'px'; aura.style.top=my+'px'; }
+    });
+    (function loop(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; cr.style.left=rx+'px'; cr.style.top=ry+'px'; requestAnimationFrame(loop); })();
+    document.querySelectorAll('a,button').forEach(el => {
+      el.addEventListener('mouseenter', () => cr.classList.add('x'));
+      el.addEventListener('mouseleave', () => cr.classList.remove('x'));
+    });
+  }
+  // Reveal on scroll (progressive enhancement — content already visible)
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  }
 
-// PASSWORD GATE
+  // PASSWORD GATE
   (function() {
     const CORRECT = 'mishka2024'; // ← change this
     const SESSION_KEY = 'portfolio_auth';
@@ -492,7 +504,7 @@
   document.getElementById('pw-input').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') checkPassword();
   });
-  
+
 </script>
 </body>
 </html>
