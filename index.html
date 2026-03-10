@@ -8,17 +8,17 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap');
     :root {
-  --ink: #1f1f1f;
-  --mid: #444444;
-  --faint: #6e6e6e;
-  --rule: rgba(0,0,0,0.12);
-  --bg: #ffffff;
-  --white: #ffffff;
-  --surface: rgba(79,134,182,0.08);
-  --surface-2: #f3f2f0;
-  --accent: #4f86b6;
-  --accent-2: #4c8c7c;
-  --accent-warm: #b86a3d;
+      --ink: #1f1f1f;
+      --mid: #444444;
+      --faint: #6e6e6e;
+      --rule: rgba(0,0,0,0.12);
+      --bg: #ffffff;
+      --white: #ffffff;
+      --surface: rgba(79,134,182,0.08);
+      --surface-2: #f3f2f0;
+      --accent: #4f86b6;
+      --accent-2: #4c8c7c;
+      --accent-warm: #b86a3d;
       --serif: 'Outfit', sans-serif;
       --mono: 'JetBrains Mono', monospace;
       --sans: 'Inter', sans-serif;
@@ -31,6 +31,22 @@
     body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-weight: 300; -webkit-font-smoothing: antialiased; overflow-x: hidden; line-height: 1.6; }
 
     /* cursor: default browser */
+      const cd = document.getElementById('cd');
+  const cr = document.getElementById('cr');
+  const aura = document.getElementById('aura');
+  if (cd && cr) {
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove', e => {
+      mx=e.clientX; my=e.clientY;
+      cd.style.left=mx+'px'; cd.style.top=my+'px';
+      if (aura) { aura.style.left=mx+'px'; aura.style.top=my+'px'; }
+    });
+    (function loop(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; cr.style.left=rx+'px'; cr.style.top=ry+'px'; requestAnimationFrame(loop); })();
+    document.querySelectorAll('a,button').forEach(el => {
+      el.addEventListener('mouseenter', () => cr.classList.add('x'));
+      el.addEventListener('mouseleave', () => cr.classList.remove('x'));
+    });
+  }
 
     /* NAV */
     .site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 20px 40px; transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s; border-bottom: 1px solid transparent; }
