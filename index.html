@@ -485,7 +485,29 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   }
+     // Cards (lowest priority)
+  document.querySelectorAll('.cs-card').forEach(el => {
+    el.addEventListener('mouseenter', () => set('cur-card', 'Read'));
+    el.addEventListener('mouseleave', reset);
+    el.addEventListener('click', e => {
+      if (e.target.closest('a')) return;
+      const link = el.querySelector('a.cs-link');
+      if (link) window.location.href = link.href;
+    });
+  });
 
+  // All links (overrides card)
+  document.addEventListener('mouseover', e => {
+    const link = e.target.closest('a, button');
+    if (link) { set('cur-link', '→'); return; }
+    const card = e.target.closest('.cs-card');
+    if (card) { set('cur-card', 'Read'); return; }
+    const textEl = e.target.closest('h1,h2,h3,p,.hero-bio,.cs-desc,.cs-title,.about-intro,.exp-content');
+    if (textEl) { set('cur-text'); return; }
+    reset();
+    });
+  });
+  
   // PASSWORD GATE
   const CORRECT = 'mishka2024'; // ← change this password
 
@@ -517,29 +539,6 @@
     input.focus();
     input.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') checkPassword();
-
-     // Cards (lowest priority)
-  document.querySelectorAll('.cs-card').forEach(el => {
-    el.addEventListener('mouseenter', () => set('cur-card', 'Read'));
-    el.addEventListener('mouseleave', reset);
-    el.addEventListener('click', e => {
-      if (e.target.closest('a')) return;
-      const link = el.querySelector('a.cs-link');
-      if (link) window.location.href = link.href;
-    });
-  });
-
-  // All links (overrides card)
-  document.addEventListener('mouseover', e => {
-    const link = e.target.closest('a, button');
-    if (link) { set('cur-link', '→'); return; }
-    const card = e.target.closest('.cs-card');
-    if (card) { set('cur-card', 'Read'); return; }
-    const textEl = e.target.closest('h1,h2,h3,p,.hero-bio,.cs-desc,.cs-title,.about-intro,.exp-content');
-    if (textEl) { set('cur-text'); return; }
-    reset();
-    });
-  });
 
 </script>
 </body>
