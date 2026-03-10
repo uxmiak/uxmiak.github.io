@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Research Copilot — mishka</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#242424;--mid:#5a5a5a;--faint:#aaaaaa;--rule:rgba(0,0,0,0.08);--bg:#fff;--sf:rgba(121,169,209,0.06);--ac:#79A9D1;--c:#6d28d9;--ct:rgba(109,40,217,0.07);--s:'Outfit',sans-serif;--m:'JetBrains Mono',monospace;--b:'Inter',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;cursor:none;}
+body{background:var(--bg);color:var(--ink);font-family:var(--b);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.6;}
+#cd{width:20px;height:20px;background:var(--ac);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);opacity:.5;}
+#cr{width:32px;height:32px;border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.5;transition:width .3s,height .3s;}
+#cr.x{width:52px;height:52px;opacity:.9;}
+.aura{position:fixed;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(121,169,209,0.15) 0%,rgba(180,215,240,0.08) 45%,transparent 70%);pointer-events:none;z-index:0;transform:translate(-50%,-50%);transition:left 1.4s cubic-bezier(.25,.46,.45,.94),top 1.4s cubic-bezier(.25,.46,.45,.94);}
+#bar{position:fixed;top:0;left:0;height:2px;background:var(--c);width:0;z-index:300;transition:width .08s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:20px 40px;transition:background .3s,border-color .3s;border-bottom:1px solid transparent;}
+nav.scrolled{background:rgba(250,250,248,.92);backdrop-filter:blur(16px);border-color:var(--rule);}
+.logo{font-family:var(--s);font-size:1.1rem;letter-spacing:-0.01em;color:var(--ink);text-decoration:none;font-weight:700;}
+.logo span{color:var(--ac);}
+.nl{display:flex;align-items:center;gap:2.5rem;list-style:none;}
+.nl a{font-family:var(--m);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .2s;}
+.nl a:hover{color:var(--ink);}
+.ncta{border:1px solid var(--rule);padding:9px 20px;border-radius:2px;font-family:var(--m);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ac);text-decoration:none;transition:background .2s,color .2s;}
+.ncta:hover{background:var(--ac);color:#fff;}
+.w{max-width:760px;margin:0 auto;padding:0 40px;}
+.hero{padding:140px 40px 80px;max-width:760px;margin:0 auto;}
+.ew{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--m);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--c);font-weight:500;margin-bottom:1.75rem;}
+.ew::before{content:'';width:20px;height:1px;background:var(--c);}
+.hero h1{font-family:var(--s);font-size:clamp(2.4rem,5.5vw,4rem);font-weight:700;line-height:1.08;letter-spacing:-.03em;margin-bottom:1.5rem;}
+.hero h1 em{font-style:italic;color:var(--mid);}
+.lede{font-size:1rem;line-height:1.8;color:var(--mid);max-width:560px;margin-bottom:2.5rem;}
+.meta{display:flex;flex-wrap:wrap;gap:2.5rem;padding:1.5rem 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
+.mi{display:flex;flex-direction:column;gap:.3rem;}
+.ml{font-family:var(--m);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);}
+.mv{font-family:var(--m);font-size:.75rem;color:var(--ink);}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.5rem;}
+.chip{font-family:var(--m);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--rule);padding:.22rem .7rem;color:var(--mid);border-radius:2px;}
+.sec{padding:80px 0;border-top:1px solid var(--rule);}
+.se{font-family:var(--m);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:1.25rem;display:block;}
+.se.c{color:var(--c);}
+.sec h2{font-family:var(--s);font-size:clamp(1.7rem,3.2vw,2.5rem);font-weight:700;line-height:1.15;letter-spacing:-.025em;margin-bottom:1.2rem;}
+.sec h2 em{font-style:italic;color:var(--mid);}
+.sec h3{font-family:var(--s);font-size:1.05rem;font-weight:700;margin:2rem 0 .5rem;}
+.sec p{font-size:.92rem;line-height:1.85;color:var(--mid);margin-bottom:.9rem;max-width:600px;}
+.dk{background:var(--ink);padding:72px 0;}
+.dk .se{color:rgba(255,255,255,.25);}
+.dk h2{font-family:var(--s);font-size:clamp(1.7rem,3.2vw,2.5rem);font-weight:700;line-height:1.15;letter-spacing:-.025em;margin-bottom:1.2rem;color:#fff;}
+.dk h2 em{font-style:italic;color:rgba(255,255,255,.35);}
+.dk p{font-size:.92rem;line-height:1.85;color:rgba(255,255,255,.5);margin-bottom:.9rem;max-width:600px;}
+/* IMPACT */
+.irow{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin:2.5rem 0;}
+.icell{background:var(--bg);padding:1.75rem;}
+.inum{font-family:var(--s);font-size:2.4rem;font-weight:800;color:var(--c);line-height:1;margin-bottom:.4rem;}
+.idesc{font-family:var(--m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
+.ilist{margin:1.5rem 0;}
+.iitem{display:flex;gap:1.2rem;padding:1.1rem 0;border-bottom:1px solid var(--rule);align-items:flex-start;}
+.iitem:last-child{border-bottom:none;}
+.iico{width:28px;height:28px;border-radius:2px;background:var(--ct);border:1px solid rgba(109,40,217,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.85rem;}
+.iitxt h4{font-family:var(--s);font-size:.93rem;font-weight:700;margin-bottom:.25rem;}
+.iitxt p{font-size:.82rem;color:var(--mid);line-height:1.6;margin:0;}
+/* LEARNINGS */
+.lgrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:2rem 0;}
+.lcard{background:var(--bg);padding:2rem;}
+.lcard h3{font-family:var(--s);font-size:1rem;font-weight:700;margin-bottom:.75rem;margin-top:0;}
+.lcard p{font-size:.87rem;line-height:1.8;color:var(--mid);}
+/* DEMAND */
+.demand{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.07);margin:2rem 0;}
+.dside{background:rgba(255,255,255,.04);padding:1.75rem;}
+.dside h4{font-family:var(--m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.75rem;}
+.ditem{display:flex;align-items:flex-start;gap:.6rem;font-size:.84rem;color:rgba(255,255,255,.45);padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.05);line-height:1.5;}
+.ditem:last-child{border-bottom:none;}
+.ditem::before{content:'—';font-family:var(--m);color:rgba(255,255,255,.2);flex-shrink:0;}
+/* PROCESS */
+.asplit{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:2rem 0;}
+.aside{background:var(--sf);padding:1.75rem;}
+.aside h4{font-family:var(--m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:.75rem;}
+.aside p{font-size:.85rem;line-height:1.7;color:var(--mid);}
+/* JTBD TABLE */
+.jtbd{width:100%;border-collapse:collapse;margin:2rem 0;}
+.jtbd th{font-family:var(--m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:.75rem 1rem;text-align:left;border-bottom:1px solid var(--rule);}
+.jtbd td{padding:.9rem 1rem;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.65;font-size:.87rem;}
+.jtbd tr:last-child td{border-bottom:none;}
+.jtbd td:first-child{font-family:var(--m);font-size:.7rem;color:var(--c);white-space:nowrap;}
+.jtbd td:last-child{color:var(--mid);}
+.reframe{background:var(--ct);border-left:3px solid var(--c);padding:1.5rem;margin:2rem 0;}
+.reframe p{font-family:var(--s);font-style:italic;font-size:1rem;color:var(--ink);margin:0;line-height:1.6;}
+.reframe .sub{font-family:var(--m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:.75rem;font-style:normal;display:block;}
+/* KANO */
+.kano{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin:2rem 0;}
+.kcell{background:var(--bg);padding:1.5rem;}
+.klabel{font-family:var(--m);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem;display:block;}
+.klabel.must{color:#b91c1c;}.klabel.perf{color:var(--c);}.klabel.del{color:#0891b2;}
+.kitem{font-size:.82rem;color:var(--mid);padding:.3rem 0;border-bottom:1px solid var(--rule);display:flex;gap:.5rem;line-height:1.5;}
+.kitem:last-child{border-bottom:none;}
+.kitem::before{content:'—';font-family:var(--m);color:var(--faint);flex-shrink:0;}
+footer{border-top:1px solid var(--rule);padding:40px;display:flex;justify-content:space-between;align-items:center;}
+.fd{font-family:var(--s);font-size:1rem;color:var(--mid);}
+.fl{display:flex;gap:2rem;}
+.fl a{font-family:var(--m);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);text-decoration:none;transition:color .2s;}
+.fl a:hover{color:var(--ac);}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease;}
+.reveal.visible{opacity:1;transform:none;}
+@media(max-width:768px){nav{padding:16px 24px;}.hero{padding:120px 24px 60px;}.w{padding:0 24px;}.sec{padding:60px 0;}.dk{padding:52px 0;}.irow,.lgrid,.demand,.asplit,.kano{grid-template-columns:1fr;}footer{flex-direction:column;gap:1.5rem;text-align:center;}}
+</style>
+</head>
+<body>
+<div id="cd"></div><div id="cr"></div><div class="aura" id="aura"></div><div id="bar"></div>
+<nav id="nav">
+  <a class="logo" href="index.html">mishka<span>.</span></a>
+  <ul class="nl"><li><a href="index.html#work">Work</a></li><li><a href="index.html#about">About</a></li><li><a href="index.html#process">Process</a></li></ul>
+  <a class="ncta" href="mailto:ux.miak@gmail.com">Get in touch</a>
+</nav>
+
+<!-- ① OVERVIEW -->
+<div class="hero reveal">
+  <span class="ew">DigitalOcean · Internal Tooling · Discovery Research</span>
+  <h1>The research team was<br>a bottleneck. <em>We decided<br>to fix that.</em></h1>
+  <p class="lede">I was brought in to define what a self-serve research tool should actually do — before anyone wrote a line of code.</p>
+  <div class="meta">
+    <div class="mi"><span class="ml">Role</span><span class="mv">UX Researcher</span></div>
+    <div class="mi"><span class="ml">Methods</span><span class="mv">JTBD Survey · Kano Analysis</span></div>
+    <div class="mi"><span class="ml">Focus</span><span class="mv">Feature prioritization · Internal tool</span></div>
+    <div class="mi"><span class="ml">Output</span><span class="mv">MVP definition</span></div>
+  </div>
+  <div class="chips"><span class="chip">Discovery Research</span><span class="chip">JTBD Survey</span><span class="chip">Kano Analysis</span><span class="chip">Internal Tooling</span></div>
+</div>
+
+<!-- ② IMPACT -->
+<div class="sec">
+  <div class="w">
+    <span class="se c reveal">Impact</span>
+    <h2 class="reveal">A focused MVP, a validated roadmap,<br>and 60% fewer ad-hoc requests.</h2>
+    <div class="irow reveal">
+      <div class="icell"><div class="inum">~60%</div><div class="idesc">Reduction in ad-hoc research requests</div></div>
+      <div class="icell"><div class="inum">P1</div><div class="idesc">Summarization elevated from add-on to priority feature</div></div>
+      <div class="icell"><div class="inum">3</div><div class="idesc">Distinct user jobs validated to guide product direction</div></div>
+    </div>
+    <div class="ilist reveal">
+      <div class="iitem"><div class="iico">📋</div><div class="iitxt"><h4>Clear, evidence-backed roadmap for stakeholder alignment</h4><p>Kano data gave the team a principled reason to say no to features — and a defensible case for what to build first.</p></div></div>
+      <div class="iitem"><div class="iico">✓</div><div class="iitxt"><h4>Jobs-to-be-done across user types validated</h4><p>Survey surfaced three distinct user jobs that would have been missed by building for one type. Product direction shifted accordingly.</p></div></div>
+      <div class="iitem"><div class="iico">↓</div><div class="iitxt"><h4>~60% reduction in ad-hoc research requests</h4><p>The self-serve tool freed researchers from fielding constant requests — turning research access from a bottleneck into an asset.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ③ LEARNINGS -->
+<div class="sec" style="background:var(--sf);">
+  <div class="w">
+    <span class="se c reveal">Learnings</span>
+    <h2 class="reveal">Turning the research lens<br><em>on ourselves.</em></h2>
+    <div class="lgrid reveal">
+      <div class="lcard">
+        <h3>Turning research inward</h3>
+        <p>Examining our own team exposed bottlenecks we had normalized. Even research teams benefit from turning the lens on themselves — the same rigor we apply to users should apply to our own workflows.</p>
+      </div>
+      <div class="lcard">
+        <h3>Kano as a scope protector</h3>
+        <p>Kano is often used to prioritize delight. Here it worked equally well as a scope protector — giving the team a principled, data-backed reason to defer features without seeming arbitrary.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ④ PROBLEM -->
+<div class="dk">
+  <div class="w">
+    <span class="se reveal">Problem</span>
+    <h2 class="reveal">Research was valuable.<br><em>But accessing it required a researcher.</em></h2>
+    <p class="reveal">The research team was producing good work — but it was locked in decks, drives, and institutional memory. Every time a PM needed a finding or leadership needed data to back a decision, they had to ask someone directly. That wasn't scalable — and it meant researchers were spending real time fielding requests instead of doing research.</p>
+    <div class="demand reveal">
+      <div class="dside">
+        <h4>Requests coming in ↑↑</h4>
+        <div class="ditem">PMs needed research before sprints</div>
+        <div class="ditem">Designers needed context before ideation</div>
+        <div class="ditem">Leadership needed answers for decisions</div>
+        <div class="ditem">Engineers wanted to avoid repeated mistakes</div>
+      </div>
+      <div class="dside">
+        <h4>Researcher bandwidth → fixed</h4>
+        <div class="ditem">Fixed team, fixed hours</div>
+        <div class="ditem">Every ad-hoc request displaced real research</div>
+        <div class="ditem">Knowledge stayed siloed despite good work</div>
+        <div class="ditem">No scalable access layer existed</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ⑤ PROCESS -->
+<div class="sec">
+  <div class="w">
+    <span class="se c reveal">Research Process</span>
+    <h2 class="reveal">The instinct was to build a search tool.<br>But search is a solution, <em>not a job.</em></h2>
+    <p class="reveal">My role in the discovery phase was to step back and understand the underlying needs across different user types — so the team would build the right thing, not just the obvious one.</p>
+
+    <div class="asplit reveal">
+      <div class="aside">
+        <h4>Why a survey over interviews</h4>
+        <p>The features were already scoped — I needed to prioritize them fast and at scale. A JTBD survey distributed widely was quicker and more defensible than pulling stakeholders into individual sessions.</p>
+      </div>
+      <div class="aside">
+        <h4>Why Kano followed</h4>
+        <p>Once the feature list was established, I needed a structured way to distinguish baseline expectations from genuine value drivers. Kano separated must-haves from delighters — and gave the team data to defer features, not just build them.</p>
+      </div>
+    </div>
+
+    <h3 class="reveal">Same tool. Three completely different jobs.</h3>
+    <p class="reveal">The survey revealed that "find research" masked very different underlying goals depending on who was asking. Designing for one would fail the others.</p>
+
+    <table class="jtbd reveal">
+      <thead><tr><th>User type</th><th>Job to be done</th></tr></thead>
+      <tbody>
+        <tr><td>PMs & Designers</td><td>When I'm about to start a sprint, I need to know if we've already learned something relevant — without pulling a researcher away.</td></tr>
+        <tr><td>Researchers</td><td>When I'm scoping a new study, I need to quickly understand what's already been explored so I don't duplicate effort.</td></tr>
+        <tr><td>Leadership & Engineers</td><td>When I need to defend a decision, I need a credible, summarized answer fast — not a link to a 40-slide deck from 18 months ago.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="reframe reveal">
+      <p>Everyone needed fast access to distilled insight — not raw research artifacts. That one reframe changed the entire product direction.</p>
+      <span class="sub">→ Summarization elevated from add-on to P1 feature</span>
+    </div>
+
+    <h3 class="reveal">Not everything people want should be built first.</h3>
+    <div class="kano reveal">
+      <div class="kcell"><span class="klabel must">Must-have</span><div class="kitem">Full-text search across all assets</div><div class="kitem">Filters by area, date, method</div><div class="kitem">Direct link to source</div></div>
+      <div class="kcell"><span class="klabel perf">Performance driver</span><div class="kitem">AI-generated summaries</div><div class="kitem">Relevance ranking by query</div><div class="kitem">Related studies surfaced</div></div>
+      <div class="kcell"><span class="klabel del">Deferred</span><div class="kitem">Natural language Q&A</div><div class="kitem">Saved searches & alerts</div><div class="kitem">Research gap detection</div></div>
+    </div>
+  </div>
+</div>
+
+<footer><div class="fd">ux.miak@gmail.com</div><div class="fl"><a href="index.html#work">Work</a><a href="index.html#about">About</a><a href="index.html#process">Process</a><a href="mailto:ux.miak@gmail.com">Contact</a></div></footer>
+<script>
+const cd=document.getElementById('cd'),cr=document.getElementById('cr'),aura=document.getElementById('aura');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px';aura.style.left=mx+'px';aura.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>cr.classList.add('x'));el.addEventListener('mouseleave',()=>cr.classList.remove('x'));});
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',scrollY>40);const h=document.documentElement;document.getElementById('bar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+const io=new IntersectionObserver(e=>e.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

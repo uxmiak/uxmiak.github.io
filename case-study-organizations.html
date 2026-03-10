@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Organizations — mishka</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#242424;--mid:#5a5a5a;--faint:#aaaaaa;--rule:rgba(0,0,0,0.08);--bg:#fff;--sf:rgba(121,169,209,0.06);--ac:#79A9D1;--c:#3a8a5a;--ct:rgba(58,138,90,0.07);--s:'Outfit',sans-serif;--m:'JetBrains Mono',monospace;--b:'Inter',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;cursor:none;}
+body{background:var(--bg);color:var(--ink);font-family:var(--b);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.6;}
+#cd{width:20px;height:20px;background:var(--ac);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);opacity:.5;}
+#cr{width:32px;height:32px;border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.5;transition:width .3s,height .3s;}
+#cr.x{width:52px;height:52px;opacity:.9;}
+.aura{position:fixed;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(121,169,209,0.15) 0%,rgba(180,215,240,0.08) 45%,transparent 70%);pointer-events:none;z-index:0;transform:translate(-50%,-50%);transition:left 1.4s cubic-bezier(.25,.46,.45,.94),top 1.4s cubic-bezier(.25,.46,.45,.94);}
+#bar{position:fixed;top:0;left:0;height:2px;background:var(--c);width:0;z-index:300;transition:width .08s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:20px 40px;transition:background .3s,border-color .3s;border-bottom:1px solid transparent;}
+nav.scrolled{background:rgba(250,250,248,.92);backdrop-filter:blur(16px);border-color:var(--rule);}
+.logo{font-family:var(--s);font-size:1.1rem;letter-spacing:-0.01em;color:var(--ink);text-decoration:none;font-weight:700;}
+.logo span{color:var(--ac);}
+.nl{display:flex;align-items:center;gap:2.5rem;list-style:none;}
+.nl a{font-family:var(--m);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .2s;}
+.nl a:hover{color:var(--ink);}
+.ncta{border:1px solid var(--rule);padding:9px 20px;border-radius:2px;font-family:var(--m);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ac);text-decoration:none;transition:background .2s,color .2s;}
+.ncta:hover{background:var(--ac);color:#fff;}
+.w{max-width:760px;margin:0 auto;padding:0 40px;}
+.hero{padding:140px 40px 80px;max-width:760px;margin:0 auto;}
+.ew{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--m);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--c);font-weight:500;margin-bottom:1.75rem;}
+.ew::before{content:'';width:20px;height:1px;background:var(--c);}
+.hero h1{font-family:var(--s);font-size:clamp(2.4rem,5.5vw,4rem);font-weight:700;line-height:1.08;letter-spacing:-.03em;margin-bottom:1.5rem;}
+.hero h1 em{font-style:italic;color:var(--mid);}
+.lede{font-size:1rem;line-height:1.8;color:var(--mid);max-width:560px;margin-bottom:2.5rem;}
+.meta{display:flex;flex-wrap:wrap;gap:2.5rem;padding:1.5rem 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
+.mi{display:flex;flex-direction:column;gap:.3rem;}
+.ml{font-family:var(--m);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);}
+.mv{font-family:var(--m);font-size:.75rem;color:var(--ink);}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.5rem;}
+.chip{font-family:var(--m);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--rule);padding:.22rem .7rem;color:var(--mid);border-radius:2px;}
+.sec{padding:80px 0;border-top:1px solid var(--rule);}
+.se{font-family:var(--m);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:1.25rem;display:block;}
+.se.c{color:var(--c);}
+.sec h2{font-family:var(--s);font-size:clamp(1.7rem,3.2vw,2.5rem);font-weight:700;line-height:1.15;letter-spacing:-.025em;margin-bottom:1.2rem;}
+.sec h2 em{font-style:italic;color:var(--mid);}
+.sec h3{font-family:var(--s);font-size:1.05rem;font-weight:700;margin:2rem 0 .5rem;}
+.sec p{font-size:.92rem;line-height:1.85;color:var(--mid);margin-bottom:.9rem;max-width:600px;}
+.dk{background:var(--ink);padding:72px 0;}
+.dk .se{color:rgba(255,255,255,.25);}
+.dk h2{font-family:var(--s);font-size:clamp(1.7rem,3.2vw,2.5rem);font-weight:700;line-height:1.15;letter-spacing:-.025em;margin-bottom:1.2rem;color:#fff;}
+.dk h2 em{font-style:italic;color:rgba(255,255,255,.35);}
+.dk p{font-size:.92rem;line-height:1.85;color:rgba(255,255,255,.5);margin-bottom:.9rem;max-width:600px;}
+/* IMPACT */
+.irow{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin:2.5rem 0;}
+.icell{background:var(--bg);padding:1.75rem;}
+.inum{font-family:var(--s);font-size:2.4rem;font-weight:800;color:var(--c);line-height:1;margin-bottom:.4rem;}
+.idesc{font-family:var(--m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
+.ilist{margin:1.5rem 0;}
+.iitem{display:flex;gap:1.2rem;padding:1.1rem 0;border-bottom:1px solid var(--rule);align-items:flex-start;}
+.iitem:last-child{border-bottom:none;}
+.iico{width:28px;height:28px;border-radius:2px;background:var(--ct);border:1px solid rgba(58,138,90,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.85rem;}
+.iitxt h4{font-family:var(--s);font-size:.93rem;font-weight:700;margin-bottom:.25rem;}
+.iitxt p{font-size:.82rem;color:var(--mid);line-height:1.6;margin:0;}
+/* LEARNINGS */
+.lgrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:2rem 0;}
+.lcard{background:var(--bg);padding:2rem;}
+.lcard h3{font-family:var(--s);font-size:1rem;font-weight:700;margin-bottom:.75rem;margin-top:0;}
+.lcard p{font-size:.87rem;line-height:1.8;color:var(--mid);}
+/* BEFORE */
+.bfore{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.07);margin:2rem 0;}
+.bcol{padding:1.25rem;background:rgba(255,255,255,.04);}
+.bcol h4{font-family:var(--m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.75rem;}
+.bitem{display:flex;align-items:center;gap:.5rem;font-family:var(--m);font-size:.68rem;color:rgba(255,255,255,.3);padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.bitem:last-child{border-bottom:none;}
+.bdot{width:5px;height:5px;border-radius:50%;background:#ef4444;flex-shrink:0;}
+/* PROCESS */
+.asplit{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:2rem 0;}
+.aside{background:var(--sf);padding:1.75rem;}
+.aside h4{font-family:var(--m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:.75rem;}
+.aside p{font-size:.85rem;line-height:1.7;color:var(--mid);}
+.rounds{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:2rem 0;}
+.rcard{background:var(--bg);padding:2rem;}
+.rlabel{font-family:var(--m);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--c);margin-bottom:.75rem;}
+.rcard h3{font-family:var(--s);font-size:1.05rem;font-weight:700;margin-bottom:.5rem;margin-top:0;}
+.rcard p{font-size:.88rem;line-height:1.75;color:var(--mid);margin-bottom:.75rem;}
+.rfind{font-family:var(--m);font-size:.72rem;letter-spacing:.04em;background:var(--ct);border-left:2px solid var(--c);padding:.7rem 1rem;color:var(--ink);}
+.rfind strong{color:var(--c);text-transform:uppercase;font-size:.6rem;letter-spacing:.1em;display:block;margin-bottom:.25rem;}
+footer{border-top:1px solid var(--rule);padding:40px;display:flex;justify-content:space-between;align-items:center;}
+.fd{font-family:var(--s);font-size:1rem;color:var(--mid);}
+.fl{display:flex;gap:2rem;}
+.fl a{font-family:var(--m);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);text-decoration:none;transition:color .2s;}
+.fl a:hover{color:var(--ac);}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease;}
+.reveal.visible{opacity:1;transform:none;}
+@media(max-width:768px){nav{padding:16px 24px;}.hero{padding:120px 24px 60px;}.w{padding:0 24px;}.sec{padding:60px 0;}.dk{padding:52px 0;}.irow,.lgrid,.bfore,.asplit{grid-template-columns:1fr;}footer{flex-direction:column;gap:1.5rem;text-align:center;}}
+</style>
+</head>
+<body>
+<div id="cd"></div><div id="cr"></div><div class="aura" id="aura"></div><div id="bar"></div>
+<nav id="nav">
+  <a class="logo" href="index.html">mishka<span>.</span></a>
+  <ul class="nl"><li><a href="index.html#work">Work</a></li><li><a href="index.html#about">About</a></li><li><a href="index.html#process">Process</a></li></ul>
+  <a class="ncta" href="mailto:ux.miak@gmail.com">Get in touch</a>
+</nav>
+
+<!-- ① OVERVIEW -->
+<div class="hero reveal">
+  <span class="ew">DigitalOcean · B2B · 3 months</span>
+  <h1>One account to<br>replace <em>a dozen</em></h1>
+  <p class="lede">DigitalOcean's top resellers were managing 12 clients through 12 separate accounts, 12 separate bills, and zero shared tooling. This is the research that helped change that — under CEO-level visibility and a tight deadline.</p>
+  <div class="meta">
+    <div class="mi"><span class="ml">Role</span><span class="mv">Lead UX Researcher</span></div>
+    <div class="mi"><span class="ml">Methods</span><span class="mv">Concept testing · Prototype validation</span></div>
+    <div class="mi"><span class="ml">Rounds</span><span class="mv">3 iterative cycles</span></div>
+    <div class="mi"><span class="ml">Participants</span><span class="mv">Top 5 revenue accounts</span></div>
+  </div>
+  <div class="chips"><span class="chip">B2B / Resellers</span><span class="chip">Concept Testing</span><span class="chip">Prototype Validation</span><span class="chip">Iterative Research</span></div>
+</div>
+
+<!-- ② IMPACT -->
+<div class="sec">
+  <div class="w">
+    <span class="se c reveal">Impact</span>
+    <h2 class="reveal">Successful launch. 100% adoption<br>among highest-value customers.</h2>
+    <div class="irow reveal">
+      <div class="icell"><div class="inum">100%</div><div class="idesc">Feature adoption among high-value customers before wider release</div></div>
+      <div class="icell"><div class="inum">3×</div><div class="idesc">Iterative research cycles run before launch</div></div>
+      <div class="icell"><div class="inum">0</div><div class="idesc">Critical issues remaining at launch</div></div>
+    </div>
+    <div class="ilist reveal">
+      <div class="iitem"><div class="iico">✓</div><div class="iitxt"><h4>Successful feature launch with all critical issues resolved</h4><p>Three iterative research cycles caught and addressed every significant friction point before the feature shipped.</p></div></div>
+      <div class="iitem"><div class="iico">↑</div><div class="iitxt"><h4>100% feature adoption among high-value customers before wider release</h4><p>The top 5 revenue accounts — the highest-risk segment — adopted Organizations before the wider rollout.</p></div></div>
+      <div class="iitem"><div class="iico">+</div><div class="iitxt"><h4>Smoother rollout with migration support included</h4><p>A late-breaking research finding — resellers' anxiety about migration — directly added a migration support flow to the rollout plan that wasn't originally scoped.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ③ LEARNINGS -->
+<div class="sec" style="background:var(--sf);">
+  <div class="w">
+    <span class="se c reveal">Learnings</span>
+    <h2 class="reveal">What this project taught me<br>about <em>research under pressure.</em></h2>
+    <div class="lgrid reveal">
+      <div class="lcard">
+        <h3>Visibility is leverage</h3>
+        <p>High-stakes projects carry pressure, but they also carry weight. When findings matter to the business, they move faster. The same visibility that demands precision also enables impact — if you're willing to own the findings confidently.</p>
+      </div>
+      <div class="lcard">
+        <h3>Seniority is about flow, not just skill</h3>
+        <p>The gap between junior and senior researchers isn't just research skill. It's about navigating politics, going with the flow without losing integrity, and knowing when to hold the line or let things move. A skill I'm actively developing.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ④ PROBLEM -->
+<div class="dk">
+  <div class="w">
+    <span class="se reveal">Problem</span>
+    <h2 class="reveal">Managing complex client relationships<br><em>with tooling built for individuals.</em></h2>
+    <p class="reveal">If you're a reseller managing a dozen clients on DigitalOcean, that meant a dozen separate Teams, a dozen separate bills, a dozen different places to manage user access. Manually reconciling invoices, onboarding users, and getting a clear picture of total business spending was a monumental administrative burden — every single month.</p>
+    <div class="bfore reveal">
+      <div class="bcol"><h4>Client A</h4><div class="bitem"><div class="bdot"></div>Separate login</div><div class="bitem"><div class="bdot"></div>Separate bill</div><div class="bitem"><div class="bdot"></div>Separate users</div></div>
+      <div class="bcol"><h4>Client B</h4><div class="bitem"><div class="bdot"></div>Separate login</div><div class="bitem"><div class="bdot"></div>Separate bill</div><div class="bitem"><div class="bdot"></div>Separate users</div></div>
+      <div class="bcol"><h4>Client C</h4><div class="bitem"><div class="bdot"></div>Separate login</div><div class="bitem"><div class="bdot"></div>Separate bill</div><div class="bitem"><div class="bdot"></div>Separate users</div></div>
+      <div class="bcol"><h4>× 9 more</h4><div class="bitem"><div class="bdot"></div>Separate login</div><div class="bitem"><div class="bdot"></div>Separate bill</div><div class="bitem"><div class="bdot"></div>Separate users</div></div>
+    </div>
+    <p class="reveal" style="color:rgba(255,255,255,.35);font-size:.82rem;">The top 5 resellers represented significant revenue and had direct CEO attention. Getting this wrong was not an option.</p>
+  </div>
+</div>
+
+<!-- ⑤ PROCESS -->
+<div class="sec">
+  <div class="w">
+    <span class="se c reveal">Research Process</span>
+    <h2 class="reveal">The project changed shape —<br>and so did my role.</h2>
+    <p class="reveal">What started as concept testing shifted mid-project into iterative prototype validation. In practice it meant continuously redesigning the research approach to match where the product was, not where we'd planned to be.</p>
+    <div class="asplit reveal">
+      <div class="aside">
+        <h4>Who I recruited</h4>
+        <p>Sourced through Looker/Snowflake and CSMs — the top 5 revenue accounts managing multiple client teams. Required active resellers: the highest-signal group for a consolidation and billing feature.</p>
+      </div>
+      <div class="aside">
+        <h4>Why concurrent methods</h4>
+        <p>Concept testing and prototype validation ran at the same time. This let me probe mental models while observing real interaction — so I could immediately explore whether a breakdown was a design problem or a conceptual mismatch.</p>
+      </div>
+    </div>
+    <div class="rounds reveal">
+      <div class="rcard">
+        <div class="rlabel">Round 01 — Concept Testing</div>
+        <h3>No screens. Just conversation.</h3>
+        <p>Open-ended sessions before touching a prototype. How do resellers mentally structure client relationships? What does billing ownership mean to them?</p>
+        <div class="rfind"><strong>→ Finding</strong>Billing transparency is emotional, not just functional — tied to client trust and professional accountability.</div>
+      </div>
+      <div class="rcard">
+        <div class="rlabel">Round 02 — Prototype Validation</div>
+        <h3>The hierarchy clicked. The billing moment didn't.</h3>
+        <p>The parent-child structure made sense quickly — but users couldn't confirm who would be charged before committing to a hierarchy change. They weren't sure who would get charged.</p>
+        <div class="rfind"><strong>→ Decision</strong>Added explicit billing ownership confirmation before any change could be saved. Copy reframed around client impact, not account mechanics.</div>
+      </div>
+      <div class="rcard">
+        <div class="rlabel">Round 03 — Pre-Launch Stress Test</div>
+        <h3>Testing with the customers who had the most to lose.</h3>
+        <p>Top-tier resellers with the most complex relationships. Sessions confirmed the revised billing flow resolved the earlier confusion. All critical issues signed off.</p>
+        <div class="rfind"><strong>→ Decision</strong>Top resellers' main concern was migration — not the feature itself. Migration support flow added to rollout; CS briefed before wider release.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer><div class="fd">ux.miak@gmail.com</div><div class="fl"><a href="index.html#work">Work</a><a href="index.html#about">About</a><a href="index.html#process">Process</a><a href="mailto:ux.miak@gmail.com">Contact</a></div></footer>
+<script>
+const cd=document.getElementById('cd'),cr=document.getElementById('cr'),aura=document.getElementById('aura');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px';aura.style.left=mx+'px';aura.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>cr.classList.add('x'));el.addEventListener('mouseleave',()=>cr.classList.remove('x'));});
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',scrollY>40);const h=document.documentElement;document.getElementById('bar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+const io=new IntersectionObserver(e=>e.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
