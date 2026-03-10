@@ -252,12 +252,12 @@
   <div class="hero-bottom reveal">
     <div>
       <p class="hero-desc">Creating human-centered, evidence-based experiences that drive meaningful impact — from AI tools to complex technical systems.</p>
-      <div class="hero-actions" style="margin-top:2rem;">
-        <button class="hero-action-item" onclick="copyEmail()">
-          <span class="hero-action-icon">✉</span>
-          <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a0d5d88ecdc9c1cbe0c7cdc1c9cc8ec3cfcd">[email&#160;protected]</a></span>
-        </button>
-        <span class="copy-feedback" id="copyFeedback">Copied!</span>
+     <div class="hero-actions">
+    <button class="hero-action-item" onclick="copyEmail()">
+      <span class="hero-action-icon">✉</span>
+      <span>ux.miak@gmail.com</span>
+    </button>
+    <span class="copy-feedback" id="copyFeedback">Copied!</span>
         <a href="#" class="hero-action-item" download>
           <span class="hero-action-icon">↓</span>
           <span>Download CV</span>
@@ -523,6 +523,27 @@
     input.focus();
     input.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') checkPassword();
+
+     // Cards (lowest priority)
+  document.querySelectorAll('.cs-card').forEach(el => {
+    el.addEventListener('mouseenter', () => set('cur-card', 'Read'));
+    el.addEventListener('mouseleave', reset);
+    el.addEventListener('click', e => {
+      if (e.target.closest('a')) return;
+      const link = el.querySelector('a.cs-link');
+      if (link) window.location.href = link.href;
+    });
+  });
+
+  // All links (overrides card)
+  document.addEventListener('mouseover', e => {
+    const link = e.target.closest('a, button');
+    if (link) { set('cur-link', '→'); return; }
+    const card = e.target.closest('.cs-card');
+    if (card) { set('cur-card', 'Read'); return; }
+    const textEl = e.target.closest('h1,h2,h3,p,.hero-bio,.cs-desc,.cs-title,.about-intro,.exp-content');
+    if (textEl) { set('cur-text'); return; }
+    reset();
     });
   });
 
