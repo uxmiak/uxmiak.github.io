@@ -151,7 +151,7 @@
     .reveal { opacity: 1; transform: none; transition: opacity .7s ease, transform .7s ease; }
     .reveal.visible { opacity: 1; transform: none; }
 
-    @media (max-width: 900px) {
+@media (max-width: 900px) {
       .site-nav { padding: 16px 24px; }
       .hero { padding: 0 24px 60px; }
       section { padding: 80px 24px; }
@@ -162,9 +162,37 @@
       .process-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 480px) {
-      .nav-links li:not(:last-child) { display: none; }
+      /* NAV */
+      .nav-links { display: none; }
       .nav-cta { display: none; }
+
+      /* HERO */
+      .hero { padding: 0 20px 60px; }
+      .hero-headline { font-size: 48px; line-height: 1; margin-bottom: 28px; }
+      .hero-eyebrow { font-size: 14px; margin-bottom: 16px; }
+      .hero-subline { font-size: 12px; }
+      .hero-desc { font-size: 14px; }
+      .hero-actions { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .hero-stats { flex-direction: column; gap: 20px; }
+      .scroll-indicator { display: none; }
+
+      /* CASE STUDIES */
+      .studies-header { flex-direction: column; gap: .5rem; }
+      .cs-title { font-size: 1.2rem; }
+      .cs-chips { gap: .3rem; }
+      .cs-chip { font-size: .65rem; }
+
+      /* ABOUT */
+      .about-bio { font-size: 18px; }
+      .skills-grid { grid-template-columns: 1fr; gap: 8px; }
+
+      /* PROCESS */
       .process-grid { grid-template-columns: 1fr; }
+      .process-step { padding: 28px 20px; }
+
+      /* FOOTER */
+      .site-footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
     }
 
   /* PASSWORD GATE */
@@ -527,6 +555,14 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Disable custom cursor on touch devices
+if ('ontouchstart' in window) {
+  document.getElementById('cd').style.display = 'none';
+  document.getElementById('cr').style.display = 'none';
+  document.documentElement.style.cursor = 'auto';
+  document.querySelectorAll('*').forEach(el => el.style.cursor = '');
+}
   }
 
   // PASSWORD GATE
