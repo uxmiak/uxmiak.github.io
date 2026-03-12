@@ -8,20 +8,17 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap');
     :root {
-      --ink: #1f1f1f;
-      --mid: #444444;
-      --faint: #6e6e6e;
-      --rule: rgba(0,0,0,0.12);
+      --ink: #242424;
+      --mid: #5a5a5a;
+      --faint: #767676;
+      --rule: rgba(0,0,0,0.08);
       --bg: #ffffff;
+      --surface: rgba(121,169,209,0.06);
+      --surface-2: #edecea;
       --white: #ffffff;
-      --surface: rgba(79,134,182,0.08);
-      --surface-2: #f3f2f0;
-      --accent: #4f86b6;
-      --accent-2: #4c8c7c;
-      --accent-warm: #b86a3d;
-      --serif: 'Outfit', sans-serif;
-      --mono: 'JetBrains Mono', monospace;
-      --sans: 'Inter', sans-serif;
+      --accent: #79A9D1;
+      --accent-2: #6aaa9a;
+      --accent-warm: #c07a50;
       --serif: 'Outfit', sans-serif;
       --mono: 'JetBrains Mono', monospace;
       --sans: 'Inter', sans-serif;
@@ -30,12 +27,13 @@
     html { font-size: 16px; scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-weight: 300; -webkit-font-smoothing: antialiased; overflow-x: hidden; line-height: 1.6; }
 
+
     /* CURSOR */
     html { cursor: none !important; }
     *, *::before, *::after { cursor: none !important; }
     #cd { width: 20px; height: 20px; background: var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); opacity: 0.5}
     #cr { width: 32px; height: 32px; border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .3s, height .3s;}
-    #cr.x { width: 52px; height: 52px; opacity: .9; }
+    #cr.x { width: 52px; height: 52px; opacity: .7; }
     #cr.read { width: 72px; height: 72px; border-color: var(--accent); opacity: .7; background: var(--accent); }
     .aura { position: fixed; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(121,169,209,0.12) 0%, rgba(121,169,209,0.05) 45%, transparent 70%); pointer-events: none; z-index: 0; transform: translate(-50%,-50%); transition: left 1.4s cubic-bezier(.25,.46,.45,.94), top 1.4s cubic-bezier(.25,.46,.45,.94); }
     /* READ label inside cursor */
@@ -110,6 +108,9 @@
     .cs-card--guardrails .cs-category { color: #b91c1c; }
     .cs-title { font-family: var(--serif); font-size: clamp(1.35rem, 2.2vw, 1.75rem); font-weight: 700; line-height: 1.25; letter-spacing: -.02em; margin-bottom: .8rem; max-width: 680px; }
     .cs-desc { font-size: .9rem; line-height: 1.75; color: var(--mid); margin-bottom: 1.25rem; max-width: 620px; }
+    .cs-outcome { display: inline-flex; align-items: baseline; gap: .6rem; margin-bottom: 1.25rem; }
+    .cs-outcome-label { font-family: var(--mono); font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); background: rgba(121,169,209,0.1); border: 1px solid rgba(121,169,209,0.25); padding: .18rem .5rem; border-radius: 2px; white-space: nowrap; flex-shrink: 0; }
+    .cs-outcome-text { font-family: var(--mono); font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; color: var(--ink); font-weight: 500; border-left: 2px solid var(--accent); padding-left: .6rem; line-height: 1.5; }
     .cs-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.5rem; }
     .cs-chip { font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; border: 1px solid var(--rule); padding: .2rem .7rem; color: var(--mid); border-radius: 2px; background: var(--bg); }
     .cs-link { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 400; color: var(--ink); text-decoration: none; border-bottom: 1.5px solid var(--ink); padding-bottom: 2px; transition: color .2s, border-color .2s; }
@@ -210,6 +211,10 @@
 </head>
 <body>
 
+<div id="cd"></div>
+<div id="cr"></div>
+<div class="aura" id="aura"></div>
+
 <div id="pw-gate">
   <div class="pw-inner">
     <div class="pw-logo">mishka<span>.</span></div>
@@ -219,7 +224,7 @@
       <button id="pw-submit" onclick="checkPassword()">Enter →</button>
     </div>
     <div id="pw-error">Incorrect password</div>
-    <p class="pw-hint">This portfolio is password protected.<br>Request access via email if needed.</p>
+    <p class="pw-hint">Don't have the password?<a href="mailto:ux.miak@gmail.com?subject=Portfolio access request">Request access →</a></p>
   </div>
 </div>
 
@@ -233,7 +238,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#process">Process</a></li>
   </ul>
-  <a class="nav-cta" href="/cdn-cgi/l/email-protection#45303d6b282c242e052228242c296b262a28">Get in touch</a>
+  <a class="nav-cta" href="mailto:ux.miak@gmail.com">Get in touch</a>
 </nav>
 
 <!-- HERO -->
@@ -246,12 +251,12 @@
   <div class="hero-bottom reveal">
     <div>
       <p class="hero-desc">Creating human-centered, evidence-based experiences that drive meaningful impact — from AI tools to complex technical systems.</p>
-     <div class="hero-actions">
-    <button class="hero-action-item" onclick="copyEmail()">
-      <span class="hero-action-icon">✉</span>
-      <span>ux.miak@gmail.com</span>
-    </button>
-    <span class="copy-feedback" id="copyFeedback">Copied!</span>
+      <div class="hero-actions" style="margin-top:2rem;">
+        <button class="hero-action-item" onclick="copyEmail()">
+          <span class="hero-action-icon">✉</span>
+          <span>ux.miak@gmail.com</span>
+        </button>
+        <span class="copy-feedback" id="copyFeedback">Copied!</span>
         <a href="#" class="hero-action-item" download>
           <span class="hero-action-icon">↓</span>
           <span>Download CV</span>
@@ -307,7 +312,12 @@
         <span class="cs-category">B2B Feature Launch</span>
       </div>
       <h3 class="cs-title">New feature launch: Organizations</h3>
-      <p class="cs-desc">Iterative concept testing and prototype validation for a high-visibility enterprise feature. My role shifted mid-project as the work evolved.</p>
+<p class="cs-outcome">
+      <p class="cs-desc">Helped de-risk a high-visibility enterprise feature launch through iterative concept testing and prototype validation, informing product direction as priorities shifted mid-project.</p>
+      <div class="cs-outcome">
+        <span class="cs-outcome-label">outcome</span>
+        <span class="cs-outcome-text">Informed enterprise feature launch direction</span>
+      </div>
       <div class="cs-chips">
         <span class="cs-chip">Qualitative Researcher</span>
         <span class="cs-chip">Concept testing</span>
@@ -326,7 +336,11 @@
         <span class="cs-category">Documentation</span>
       </div>
       <h3 class="cs-title">Product docs testing</h3>
-      <p class="cs-desc">Product documentation hadn't been formally tested in years. We needed to know: can users actually complete their first critical deployment tasks using our docs?</p>
+      <p class="cs-desc">Tested whether users could complete critical deployment tasks using product documentation, surfacing barriers that gave the team a clearer path to improve first-use success.</p>
+      <div class="cs-outcome">
+        <span class="cs-outcome-label">outcome</span>
+        <span class="cs-outcome-text">Uncovered blockers in first-time deployment workflows</span>
+      </div>
       <div class="cs-chips">
         <span class="cs-chip">Qualitative research</span>
         <span class="cs-chip">Task-based testing</span>
@@ -344,7 +358,11 @@
         <span class="cs-category">Internal Tooling</span>
       </div>
       <h3 class="cs-title">Research CoPilot</h3>
-      <p class="cs-desc">Discovery research to define the MVP for an internal AI research copilot using JTBD surveys and Kano analysis to cut through feature requests and find what users actually needed.</p>
+      <p class="cs-desc">Defined the MVP for an internal AI research tool using JTBD surveys and Kano analysis, helping the team prioritize what users actually needed over what stakeholders merely requested.</p>
+      <div class="cs-outcome">
+        <span class="cs-outcome-label">outcome</span>
+        <span class="cs-outcome-text">Defined MVP priorities for internal AI research tooling</span>
+      </div>
       <div class="cs-chips">
         <span class="cs-chip">Discovery research</span>
         <span class="cs-chip">JTBD survey</span>
@@ -364,7 +382,11 @@
         <span class="wip-dot" style="margin-left:.25rem">In progress</span>
       </div>
       <h3 class="cs-title">Impact of refusal guardrails on UX</h3>
-      <p class="cs-desc">Experimental research into how refusal guardrails affect user experience in multi-turn AI conversations. No prior literature exists. Early findings are surfacing a tension that has no clean answer yet.</p>
+      <p class="cs-desc">Experimental mixed-methods research into how refusal guardrails affect trust, friction, and usability in multi-turn AI conversations, surfacing tradeoffs relevant to safer AI interaction design.</p>
+      <div class="cs-outcome">
+        <span class="cs-outcome-label">outcome</span>
+        <span class="cs-outcome-text">Surfaced UX tradeoffs in AI safety guardrails</span>
+      </div>
       <div class="cs-chips">
         <span class="cs-chip">Experimental design</span>
         <span class="cs-chip">Mixed methods</span>
@@ -438,16 +460,16 @@
 
 <!-- FOOTER -->
 <footer class="site-footer">
-  <div class="footer-domain"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5a2f227437333b311a3d373b333674393537">[email&#160;protected]</a></div>
+  <div class="footer-domain">ux.miak@gmail.com</div>
   <div class="footer-links">
     <a href="#work">Work</a>
     <a href="#about">About</a>
     <a href="#process">Process</a>
-    <a href="/cdn-cgi/l/email-protection#b4c1cc9ad9ddd5dff4d3d9d5ddd89ad7dbd9">Contact</a>
+    <a href="mailto:ux.miak@gmail.com">Contact</a>
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   window.addEventListener('scroll', () => {
     const nav = document.getElementById('nav');
     if (nav) nav.classList.toggle('scrolled', window.scrollY > 40);
@@ -461,23 +483,26 @@
       if (fb) { fb.classList.add('show'); setTimeout(() => fb.classList.remove('show'), 2000); }
     });
   }
-  // Cursor (case studies only)
+  // CURSOR
   const cd = document.getElementById('cd');
   const cr = document.getElementById('cr');
   const aura = document.getElementById('aura');
-  if (cd && cr) {
-    let mx=0,my=0,rx=0,ry=0;
-    document.addEventListener('mousemove', e => {
-      mx=e.clientX; my=e.clientY;
-      cd.style.left=mx+'px'; cd.style.top=my+'px';
-      if (aura) { aura.style.left=mx+'px'; aura.style.top=my+'px'; }
-    });
-    (function loop(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; cr.style.left=rx+'px'; cr.style.top=ry+'px'; requestAnimationFrame(loop); })();
-    document.querySelectorAll('a,button').forEach(el => {
-      el.addEventListener('mouseenter', () => cr.classList.add('x'));
-      el.addEventListener('mouseleave', () => cr.classList.remove('x'));
-    });
-  }
+  let mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', e => {
+    mx=e.clientX; my=e.clientY;
+    cd.style.left=mx+'px'; cd.style.top=my+'px';
+    aura.style.left=mx+'px'; aura.style.top=my+'px';
+  });
+  (function loop(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; cr.style.left=rx+'px'; cr.style.top=ry+'px'; requestAnimationFrame(loop); })();
+  // Hover: read on case study cards, expand on other links
+  document.querySelectorAll('.cs-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { cr.classList.remove('x'); cr.classList.add('read'); cd.style.opacity='0'; });
+    el.addEventListener('mouseleave', () => { cr.classList.remove('read'); cd.style.opacity='1'; });
+  });
+  document.querySelectorAll('a:not(.cs-link), button').forEach(el => {
+    el.addEventListener('mouseenter', () => { if(!cr.classList.contains('read')){ cr.classList.add('x'); } });
+    el.addEventListener('mouseleave', () => cr.classList.remove('x'));
+  });
   // Reveal on scroll (progressive enhancement — content already visible)
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {
@@ -485,29 +510,7 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   }
-     // Cards (lowest priority)
-  document.querySelectorAll('.cs-card').forEach(el => {
-    el.addEventListener('mouseenter', () => set('cur-card', 'Read'));
-    el.addEventListener('mouseleave', reset);
-    el.addEventListener('click', e => {
-      if (e.target.closest('a')) return;
-      const link = el.querySelector('a.cs-link');
-      if (link) window.location.href = link.href;
-    });
-  });
 
-  // All links (overrides card)
-  document.addEventListener('mouseover', e => {
-    const link = e.target.closest('a, button');
-    if (link) { set('cur-link', '→'); return; }
-    const card = e.target.closest('.cs-card');
-    if (card) { set('cur-card', 'Read'); return; }
-    const textEl = e.target.closest('h1,h2,h3,p,.hero-bio,.cs-desc,.cs-title,.about-intro,.exp-content');
-    if (textEl) { set('cur-text'); return; }
-    reset();
-    });
-  });
-  
   // PASSWORD GATE
   const CORRECT = 'mishka2024'; // ← change this password
 
@@ -539,6 +542,8 @@
     input.focus();
     input.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') checkPassword();
+    });
+  });
 
 </script>
 </body>
